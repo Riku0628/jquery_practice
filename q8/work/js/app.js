@@ -49,13 +49,17 @@ $(function() {
     };
   };
 
-    function displayError() {　//通信が失敗したときの処理
-      const errMes = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
+    function displayError(err) {　//通信が失敗したときの処理
       $(".lists").empty();　//listsの中を消去する
       $(".message").remove(); //messageを消去する
-      $('.inner').prepend(errMes); //errMesを表示する
+      const errMes = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
       console.log("ajax通信に失敗しました。");
+      console.log("statusText : " + err.statusText);
+      console.log("status : " + err.status);
+      $('.inner').prepend(errMes); //errMesを表示する
     };
+
+
 
 
 
