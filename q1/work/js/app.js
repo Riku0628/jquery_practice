@@ -5,42 +5,36 @@ $(function() {
 
 $(function() {
   $("#q2").on("click", function() {
-    $("#q2").css("background", "pink");
+    $(this).css("background", "pink");
   })
 });
 //クリックしたときに背景をpinkに変える
 
 $(function() {
   $("#q3").on("click", function() {
-    $("#q3").fadeOut(3000);
+    $(this).fadeOut(3000);
   })
 });
 //クリックしたときに３秒かけてフェードアウト
 
 $(function() {
   $("#q4").on("click", function() {
-    $("#q4").addClass("large");
+    $(this).addClass("large");
   })
 });
 //クリックしたときにlargeクラスをつける
 
 $(function() {
   $("#q5").on("click", function() {
-    $("#q5").before("DOMの前");
-    //クリックしたときに要素の直前に挿入
-    $("#q5").prepend("DOMの中の前");
-    //クリックしたときに要素の前に挿入
-    $("#q5").append("DOMの中の後");
-    //クリックしたときに要素の後に挿入
-    $("#q5").after("DOMの後");
-    //クリックしたときに要素の直後に挿入
+    $(this).before("DOMの前").prepend("DOMの中の前").append("DOMの中の後").after("DOMの後");
+    //クリックしたときに要素の直前に挿入、要素の前に挿入、要素の後に挿入、要素の直後に挿入
     })
 });
 
 
 $(function() {
   $("#q6").on("click", function() {
-    $("#q6").animate({marginTop:"100px", marginLeft:"100px"},2000);
+    $(this).animate({marginTop:"100px", marginLeft:"100px"},2000);
   })
 });
 //クリックしたときに上に100px、左に100px空間を開ける
@@ -54,10 +48,10 @@ $(function() {
 
 $(function() {
   $("#q8").mouseout(function() {
-    $("#q8").removeClass("large");
+    $(this).removeClass("large");
   })
   $("#q8").mouseover(function() {
-    $("#q8").addClass("large");
+    $(this).addClass("large");
   })
 });
 //マウスをはずしたときにlargeクラスをはずす
