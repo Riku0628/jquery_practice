@@ -52,11 +52,19 @@ $(function() {
     function displayError(err) {　//通信が失敗したときの処理
       $(".lists").empty();　//listsの中を消去する
       $(".message").remove(); //messageを消去する
-      const errMes = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
+      const errMesuser = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
+      const errMesdev = $('<div class="message">' + "サーバーの不具合です。" + '</div>');
+      const errMes = $('<div class="message">' + "なんらかの不具合が起きています。" + '</div>');
       console.log("ajax通信に失敗しました。");
       console.log("statusText : " + err.statusText);
       console.log("status : " + err.status);
-      $('.inner').prepend(errMes); //errMesを表示する
+      if ( 0 === err.status ){
+        $('.inner').prepend(errMesuser); //errMesを表示する
+      } else if(500 === err.status ){
+        $('.inner').prepend(errMesdev);
+      } else {
+        $('.inner').prepend(errMes);
+      }
     };
 
 
