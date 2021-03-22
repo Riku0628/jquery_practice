@@ -1,19 +1,21 @@
 $(function() {
-  let last_search = "";
+  let lastSearch = "";
   let pageCount = 1
 
   $('.search-btn').on('click',function() {
     //.search-btnがクリックされたとき
     let searchWord = $('#search-input').val();
     //searchWordにsearch-input内容を取得する
-    if (searchWord !== last_search){
-      pageCount = 1,$(".lists").empty(), $(".message").remove();
-      }else{
+    if (searchWord !== lastSearch) {
+      pageCount = 1
+      $(".lists").empty();
+      $(".message").remove();
+      } else {
         pageCount++;
       };
-    //searchWordとlast_searchの内容を比較して違う場合pageCountを1にしてlistsを消去して、messageも消去する。同じ場合pageCountを+1にする
-    last_search = searchWord
-    //last_searchにsearchWorldの内容を格納する
+    //searchWordとlastSearchの内容を比較して違う場合pageCountを1にしてlistsを消去して、messageも消去する。同じ場合pageCountを+1にする
+    lastSearch = searchWord
+    //lastSearchにsearchWorldの内容を格納する
     const settings = {
       "url": `https://ci.nii.ac.jp/books/opensearch/search?title=${searchWord}&format=json&p=${pageCount}&count=20`,
       "method": "GET",}
@@ -23,8 +25,6 @@ $(function() {
       }).fail(function (err) { //失敗の処理
       displayError(err)
       });
-
-
 
     function displayResult(result) {
       const messNone = $("<div class='message'>" + "検索結果が見つかりませんでした。" + "<br>" + "別のキーワードで検索して下さい。" + "</div>");
@@ -39,8 +39,8 @@ $(function() {
         //library.titleとundefinedを比較する。一致しなかった場合library.titleを、一致した場合「タイトル不明」をそれぞれ表示する。
         "<p>作者：" + (library['dc:creator'] ? library['dc:creator'] : "作者不明" ) + "</p>" +
         //library['dc:creator']とundefinedを比較する。一致しなかった場合library['dc:creator']を、一致した場合「作者不明」をそれぞれ表示する。
-        "<p>出版社：" +(library['dc:publisher'] ? library['dc:publisher'] : "[出版者不明]"  )+ "</p>" +
-        //library['dc:publisher']とundefinedを比較する。一致しなかった場合library['dc:publisher']を、一致した場合「出版社不明」をそれぞれ表示する。
+        "<p>出版社：" +(library['dc:publisher'][0] ? library['dc:publisher'][0] : "[出版者不明]"  )+ "</p>" +
+        //library['dc:publisher']とundefinedを比較する。一致しなかった場合library['dc:publisher'][0]を、一致した場合「出版社不明」をそれぞれ表示する。
         "<a href =" + library['@id'] + " " + 'target="_blank">' + "書籍情報" + "</a>" +
         //library['@id']リンクを含んだ書籍情報を表示する。
         '</div>' + '</li>') ;
@@ -52,24 +52,20 @@ $(function() {
     function displayError(err) {　//通信が失敗したときの処理
       $(".lists").empty();　//listsの中を消去する
       $(".message").remove(); //messageを消去する
-      const errMesuser = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
-      const errMesdev = $('<div class="message">' + "サーバーの不具合です。" + '</div>');
-      const errMes = $('<div class="message">' + "なんらかの不具合が起きています。" + '</div>');
+      const userErrormessage = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
+      const notfoundErrormessage = $('<div class="message">' + "サーバーの不具合です。" + '</div>');
+      const errorMessage = $('<div class="message">' + "なんらかの不具合が起きています。" + '</div>');
       console.log("ajax通信に失敗しました。");
       console.log("statusText : " + err.statusText);
       console.log("status : " + err.status);
       if ( 0 === err.status ){
-        $('.inner').prepend(errMesuser); //errMesを表示する
-      } else if(500 === err.status ){
-        $('.inner').prepend(errMesdev);
+        $('.inner').prepend(userErrormessage);
+      } else if( 404 === err.status ) {
+        $('.inner').prepend(notfoundErrormessage);
       } else {
-        $('.inner').prepend(errMes);
+        $('.inner').prepend(errorMessage);
       }
     };
-
-
-
-
 
   $(".reset-btn").on("click", function () { //.reset-btnをクリックしたときの処理
     pageCount = 1;　//ページカウントを１に戻す
@@ -78,11 +74,7 @@ $(function() {
     $("#search-input").val("")　//serch-inputの中を消去する
   });
 });
-
 });
-
-
-
 
 // API
 // const settings = {
