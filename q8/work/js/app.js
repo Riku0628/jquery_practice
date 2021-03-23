@@ -60,7 +60,7 @@ $(function() {
       console.log("status : " + err.status);
       if ( 0 === err.status ){
         $('.inner').prepend(userErrormessage);
-      } else if( 404 === err.status ) {
+      } else if( 400 === err.status ) {
         $('.inner').prepend(notfoundErrormessage);
       } else {
         $('.inner').prepend(errorMessage);
