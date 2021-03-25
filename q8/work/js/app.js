@@ -17,7 +17,7 @@ $(function() {
     lastSearch = searchWord
     //lastSearchにsearchWorldの内容を格納する
     const settings = {
-      "url": `https://ci.nii.ac.jp/books/opensearch/search?title=${searchWord}&format=json&p=${pageCount}&count=20`,
+      "url": `https://cai.nii.ac.jp/books/opensearch/search?title=${searchWord}&format=json&p=${pageCount}&count=20`,
       "method": "GET",}
     $.ajax(settings).done(function (response) { //成功の処理
       const result = response['@graph'];
@@ -53,15 +53,12 @@ $(function() {
       $(".lists").empty();　//listsの中を消去する
       $(".message").remove(); //messageを消去する
       const userErrormessage = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
-      const notfoundErrormessage = $('<div class="message">' + "サーバーの不具合です。" + '</div>');
       const errorMessage = $('<div class="message">' + "なんらかの不具合が起きています。" + '</div>');
       console.log("ajax通信に失敗しました。");
       console.log("statusText : " + err.statusText);
       console.log("status : " + err.status);
-      if ( 0 === err.status ){
+      if ( err.status === 0 ){
         $('.inner').prepend(userErrormessage);
-      } else if( 400 === err.status ) {
-        $('.inner').prepend(notfoundErrormessage);
       } else {
         $('.inner').prepend(errorMessage);
       }
