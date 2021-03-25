@@ -17,7 +17,7 @@ $(function() {
     lastSearch = searchWord
     //lastSearchにsearchWorldの内容を格納する
     const settings = {
-      "url": `https://cai.nii.ac.jp/books/opensearch/search?title=${searchWord}&format=json&p=${pageCount}&count=20`,
+      "url": `https://ci.nii.ac.jp/books/opensearch/search?title=${searchWord}&format=json&p=${pageCount}&count=20`,
       "method": "GET",}
     $.ajax(settings).done(function (response) { //成功の処理
       const result = response['@graph'];
