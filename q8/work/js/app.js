@@ -52,15 +52,19 @@ $(function() {
     function displayError(err) {　//通信が失敗したときの処理
       $(".lists").empty();　//listsの中を消去する
       $(".message").remove(); //messageを消去する
-      const userErrormessage = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
+      const userErrorMessage = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
+      const notTextErrorMessage = $('<div class="message">' + "文字を入力してください。" + '</div>');
       const errorMessage = $('<div class="message">' + "なんらかの不具合が起きています。" + '</div>');
       console.log("ajax通信に失敗しました。");
       console.log("statusText : " + err.statusText);
       console.log("status : " + err.status);
+      console.log(err)
       if ( err.status === 0 ){
-        $('.inner').prepend(userErrormessage);
+        $('.inner').prepend(userErrorMessage);
+      } else if( err.status === 400 ) {
+        $('.inner').prepend(notTextErrorMessage);
       } else {
-        $('.inner').prepend(errorMessage);
+        $('.inner').prepend(errorMessage)
       }
     };
 
