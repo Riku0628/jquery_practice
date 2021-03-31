@@ -55,10 +55,6 @@ $(function() {
       const userErrorMessage = $('<div class="message">' + "正常に通信できませんでした。" + '<br>' + "インターネットの接続の確認をしてください" + '</div>');
       const notTextErrorMessage = $('<div class="message">' + "文字を入力してください。" + '</div>');
       const errorMessage = $('<div class="message">' + "なんらかの不具合が起きています。" + '</div>');
-      console.log("ajax通信に失敗しました。");
-      console.log("statusText : " + err.statusText);
-      console.log("status : " + err.status);
-      console.log(err)
       if ( err.status === 0 ){
         $('.inner').prepend(userErrorMessage);
       } else if( err.status === 400 ) {
